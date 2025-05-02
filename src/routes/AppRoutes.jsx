@@ -22,6 +22,12 @@ function AppContent() {
         const isAuthPage = location.pathname === "/login" || location.pathname === "/register";
         if (isAuthPage) return;
 
+        const token = localStorage.getItem("token");
+        if (!token) {
+            navigate("/login", { replace: true });
+            return;
+        }
+
         const fetchUserProfile = async () => {
             try {
                 const response = await api.get("/api/auth/me");
